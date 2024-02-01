@@ -1,2 +1,14 @@
-<app-search></app-search>
-<app-weather></app-weather>
+<div class="row">
+  <div class="col-10 offset-1">
+    <app-search
+      (search)="onSearch($event)"
+      [inputPlaceholder]="'Search State'"></app-search>
+  </div>
+</div>
+<div class="row mt-2">
+  <div class="col-10 offset-1">
+    <app-weather
+      *ngIf="isWeatherLoaded"
+      [weather]="weather"></app-weather>
+  </div>
+</div>

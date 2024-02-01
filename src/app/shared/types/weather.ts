@@ -1,4 +1,4 @@
-import { WeatherResponse } from './iweather-reponse';
+import { WeatherResponse } from './weather-reponse';
 import { ForecastResponse } from './forecast-response';
 
 export interface Weather {

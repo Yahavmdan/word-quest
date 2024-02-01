@@ -1,0 +1,17 @@
+<div class="container-fluid border p-2 favorite-item"
+     [ngClass]="{
+  'bg-light': weatherHelper.isDayTime(weather),
+  'bg-dark text-light': !weatherHelper.isDayTime(weather)
+}" (click)="getFullWeatherPage()">
+  <h4>{{ weather.state }}</h4>
+  <h5>{{ weather.country }}</h5>
+  <img class="weatherIcon" fill [ngSrc]="weatherHelper.getWeatherIconLink(weather.currentWeather.WeatherIcon)" alt="icon"/>
+  <p class="forecast-text">{{ weather.currentWeather.WeatherText }}</p>
+  <p class="mb-2">
+    {{ weatherHelper.getCTemperatureString(weather.currentWeather.Temperature.Metric) }}
+  </p>
+  <p>{{ weather.currentWeather.LocalObservationDateTime | date:'EEEE'}}</p>
+  <button (click)="removeFavorite()" class="btn btn-danger">
+    Remove from Favorites
+  </button>
+</div>

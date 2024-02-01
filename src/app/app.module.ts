@@ -4,20 +4,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
-import { HeaderComponent } from "./shared/components/header/header.component";
 import { HomeModule } from "./components/home/home.module";
+import { StoreModule } from '@ngrx/store';
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     FavoritesComponent,
-    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HomeModule
+    HomeModule,
+    StoreModule.forRoot({}, {}),
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

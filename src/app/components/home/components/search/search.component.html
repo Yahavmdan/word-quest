@@ -1,4 +1,23 @@
-<div class="d-flex w-100 justify-content-center gap-2">
-  <input type="text" class="w-25">
-  <button class="btn btn-primary">Search</button>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <div class="input-group">
+        <input
+          (keyup)="keyPress($event)"
+          #searchValue="ngModel"
+          [(ngModel)]="searchInput"
+          type="text"
+          class="form-control"
+          placeholder="{{inputPlaceholder}}"
+          [ngbTypeahead]="onAutoComplete"
+          [resultFormatter]="popupFormatter"
+          [inputFormatter]="selectFormatter">
+        <div class="input-group-append">
+          <button (click)="onSearch()" class="btn btn-outline-secondary" type="button">
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
