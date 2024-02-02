@@ -6,15 +6,16 @@ import { WeatherComponent } from './components/weather/weather.component';
 import { FormsModule } from "@angular/forms";
 import { NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
 import { SharedModule } from "../../shared/shared.module";
-import { ForecastComponent } from "./components/weather/forecast/forecast.component";
-import { FavoriteItemComponent } from "./components/weather/favorite-item/favorite-item.component";
+import { ForecastComponent } from "./components/weather/components/forecast/forecast.component";
+import { StoreModule } from "@ngrx/store";
+import { reducer } from "../../shared/store/reducers";
+import { localStorageSyncReducer } from "../../shared/store/meta-reducers";
 
 @NgModule({
   declarations: [
     SearchComponent,
     WeatherComponent,
     ForecastComponent,
-    FavoriteItemComponent
   ],
   exports: [
     SearchComponent,
@@ -26,7 +27,11 @@ import { FavoriteItemComponent } from "./components/weather/favorite-item/favori
     FormsModule,
     NgbTypeahead,
     SharedModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+      StoreModule.forRoot(
+          { favorites: reducer },
+          { metaReducers: [localStorageSyncReducer] }
+      )
   ]
 })
 export class HomeModule { }

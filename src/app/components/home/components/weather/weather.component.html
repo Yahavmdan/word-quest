@@ -1,14 +1,12 @@
-<div class="jumbotron mt-2 border pt-4 pb-4" [ngClass]="{
-  'bg-light': weatherHelper.isDayTime(weather),
-  'bg-dark text-light': !weatherHelper.isDayTime(weather)}">
-  <div class="row">
-    <div class="col-1 d-flex justify-content-center">
+<div class="card-wrapper mt-2 pt-4 pb-4">
+  <div class="d-flex justify-content-between">
+    <div class="d-flex">
       <img class="weatherIcon"
            [ngSrc]="weatherHelper.getWeatherIconLink(weather.currentWeather.WeatherIcon)"
            alt="weather icon"
-           fill>
+           width="75" height="45">
     </div>
-    <div class="col-5">
+    <div>
       <h4>{{ weather.state }}, {{ weather.country }}</h4>
       <span *ngIf="isCelsiusType">
         {{weatherHelper.getCTemperatureString(weather.currentWeather.Temperature.Metric)}}
@@ -17,12 +15,10 @@
         {{weatherHelper.getFTemperatureString(weather.currentWeather.Temperature.Imperial)}}
       </span>
     </div>
-    <div class="col-5 text-right">
-      <button *ngIf="!isFavorite()" (click)="addFavorite()" class="btn btn btn-success">
-        Add to Favorites
-      </button>
-      <button *ngIf="isFavorite()" (click)="removeFavorite()" class="btn btn btn-danger">
-        Remove from Favorites
+    <div>
+      <button (click)="isFavorite() ? removeFavorite() : addFavorite()"
+              [ngClass]="isFavorite() ? 'btn btn btn-danger' : 'btn btn btn-success'">
+        {{ isFavorite() ? 'Remove from' : 'Add to' }} Favorites
       </button>
       <app-toggle-button (onChangeState)="setTemperatureType($event)" class="d-block" [trueText]="'Celsius'"
                          [falseText]="'Fahrenheit'"></app-toggle-button>
@@ -36,8 +32,9 @@
   </div>
   <div class="row mt-4 d-flex justify-content-around">
     <div *ngFor="let forecast of weather.forecast.DailyForecasts; let i = index"
-         class="col-5 col-lg-2 border m-1 text-center p-2 text-wrap mt-2">
-      <app-forecast [iconUrl]="weatherHelper.getForecastIcon(weather,i)" [date]="forecast.Date"
+         class="col-5 col-lg-2 m-1 text-center p-2 text-wrap mt-2">
+      <app-forecast [iconUrl]="weatherHelper.getForecastIcon(weather,i)"
+                    [date]="forecast.Date"
                     [text]="weatherHelper.getCurrentForecastText(weather,i)"
                     [tempRange]="weatherHelper.getTemperatureRange(forecast,isCelsiusType)"></app-forecast>
     </div>

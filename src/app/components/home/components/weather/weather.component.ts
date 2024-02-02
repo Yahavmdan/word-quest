@@ -20,10 +20,10 @@ export class WeatherComponent implements OnInit {
   public favorites: Weather[];
 
   constructor(
-    private store: Store<FavoritesState>,
+    private _store: Store<FavoritesState>,
     public weatherHelper: WeatherHelper
   ) {
-    this.favorites$ = this.store.select('favorites')
+    this.favorites$ = this._store.select('favorites')
   }
 
   public ngOnInit(): void {
@@ -35,15 +35,17 @@ export class WeatherComponent implements OnInit {
   }
 
   public addFavorite(): void {
-    this.store.dispatch(new WeatherActions.AddFavorite(this.weather))
+    this._store.dispatch(new WeatherActions.AddFavorite(this.weather))
   }
 
   public removeFavorite(): void {
-    this.store.dispatch(new WeatherActions.RemoveFavorite(this.weather.Key))
+    this._store.dispatch(new WeatherActions.RemoveFavorite(this.weather.Key))
   }
 
   public isFavorite(): boolean {
-    return this.favorites.findIndex(fav => fav.Key === this.weather.Key) >= 0;
+    return !this.favorites?.length
+      ? false
+      : this.favorites.findIndex(fav => fav.Key === this.weather.Key) >= 0;
   }
 
 }

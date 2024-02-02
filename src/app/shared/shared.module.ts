@@ -16,7 +16,7 @@ import { NgbToastModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     RouterModule,
     NgbToastModule,
-    NgbCollapseModule,
+    NgbCollapseModule
   ],
   exports: [
     ToggleButtonComponent,

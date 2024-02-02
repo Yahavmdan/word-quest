@@ -29,7 +29,7 @@ export class SearchComponent {
     this.search.emit(this.selectedCity);
   }
 
-  public keyPress(event): void {
+  public keyPress(event: KeyboardEvent): void {
     this.filterText()
     if (event.key === "Enter")
       this.onSearch();

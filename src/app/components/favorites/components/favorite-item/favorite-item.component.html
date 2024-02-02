@@ -1,11 +1,11 @@
-<div class="container-fluid border p-2 favorite-item"
-     [ngClass]="{
-  'bg-light': weatherHelper.isDayTime(weather),
-  'bg-dark text-light': !weatherHelper.isDayTime(weather)
-}" (click)="getFullWeatherPage()">
+<div class="container-fluid card-wrapper p-2">
   <h4>{{ weather.state }}</h4>
   <h5>{{ weather.country }}</h5>
-  <img class="weatherIcon" fill [ngSrc]="weatherHelper.getWeatherIconLink(weather.currentWeather.WeatherIcon)" alt="icon"/>
+  <img class="weatherIcon"
+       width="75"
+       height="45"
+       [ngSrc]="weatherHelper.getWeatherIconLink(weather.currentWeather.WeatherIcon)"
+       alt="icon"/>
   <p class="forecast-text">{{ weather.currentWeather.WeatherText }}</p>
   <p class="mb-2">
     {{ weatherHelper.getCTemperatureString(weather.currentWeather.Temperature.Metric) }}

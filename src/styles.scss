@@ -25,6 +25,14 @@ $white: #ffffff;
   padding: 1rem;
 }
 
+.card-wrapper {
+  border: transparent 1px solid;
+  border-radius: 20px;
+  padding: 1em;
+  background-color: white;
+  box-shadow: 7px 9px 28px -3px rgba(0,0,0,0.1);
+}
+
 .form-container {
   width: 600px;
   background-color: #fafffe;

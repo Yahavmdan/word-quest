@@ -4,9 +4,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
-import { HomeModule } from "./components/home/home.module";
-import { StoreModule } from '@ngrx/store';
 import { SharedModule } from "./shared/shared.module";
+import { HomeModule } from "./components/home/home.module";
+import { FavoritesModule } from "./components/favorites/favorites.module";
+import { NgOptimizedImage } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -18,8 +19,9 @@ import { SharedModule } from "./shared/shared.module";
     BrowserModule,
     AppRoutingModule,
     HomeModule,
-    StoreModule.forRoot({}, {}),
-    SharedModule
+    SharedModule,
+    FavoritesModule,
+    NgOptimizedImage
   ],
   providers: [],
   bootstrap: [AppComponent]

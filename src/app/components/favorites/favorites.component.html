@@ -1,1 +1,11 @@
-<p>favorites works!</p>
+<div class="card-wrapper mt-2 pt-4 pb-4">
+    <div class="col-12 text-center">
+        <h1>My Favorites</h1>
+    </div>
+    <div class="row">
+        <div class="col-8 offset-2 offset-md-0 col-md-4 col-lg-3 text-center mt-2 pt-2"
+             *ngFor="let favorite of favorites$ | async">
+            <app-favorite-item [weather]="favorite"></app-favorite-item>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,18 @@
 <div class="form-check form-check-inline">
-  <input (change)="changeState(false)" class="form-check-input" type="radio" name="switchButton">
-  <label class="form-check-label" for="inlineRadio1">{{falseText}}</label>
+  <input (change)="changeState(false)"
+         id="inlineRadio1"
+         class="form-check-input"
+         type="radio"
+         name="switchButton">
+  <label class="form-check-label"
+         for="inlineRadio1">{{falseText}}</label>
 </div>
 <div class="form-check form-check-inline">
-  <input checked (change)="changeState(true)" class="form-check-input" type="radio" name="switchButton">
-  <label class="form-check-label" for="inlineRadio2">{{trueText}}</label>
+  <input checked
+         id="inlineRadio2"
+         (change)="changeState(true)"
+         class="form-check-input"
+         type="radio" name="switchButton">
+  <label class="form-check-label"
+         for="inlineRadio2">{{trueText}}</label>
 </div>
