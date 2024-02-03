@@ -16,16 +16,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.themeService.isDarkMode$.subscribe((isDarkMode) => {
       this.isDarkMode = isDarkMode;
-      this.saveTheme(this.isDarkMode);
     });
   }
 
   public toggleMode(): void {
     this.themeService.toggleMode();
-  }
-
-  private saveTheme(isDarkMode: boolean): void {
-    localStorage.setItem('theme', JSON.stringify({darkMode: isDarkMode}));
   }
 
 }

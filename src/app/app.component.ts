@@ -15,12 +15,6 @@ export class AppComponent implements OnInit {
     this._themeService.isDarkMode$.subscribe((isDarkMode) => {
       this.isDarkMode = isDarkMode;
     });
-
-    if (JSON.parse(localStorage.getItem('theme'))) {
-      this.isDarkMode = JSON.parse(localStorage.getItem('theme')).darkMode;
-      return;
-    }
-    localStorage.setItem('theme', JSON.stringify({darkMode: this.isDarkMode}));
   }
 
 }
