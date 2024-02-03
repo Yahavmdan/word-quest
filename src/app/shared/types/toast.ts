@@ -1,4 +1,4 @@
-export interface Toast {
+export type Toast = {
   header: string,
   body: string,
   className?: string

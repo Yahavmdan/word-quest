@@ -1,7 +1,7 @@
 import { WeatherResponse } from './weather-reponse';
 import { ForecastResponse } from './forecast-response';
 
-export interface Weather {
+export type Weather = {
   Key: string,
   state: string,
   country: string,

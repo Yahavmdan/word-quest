@@ -8,6 +8,7 @@ import { SharedModule } from "./shared/shared.module";
 import { HomeModule } from "./components/home/home.module";
 import { FavoritesModule } from "./components/favorites/favorites.module";
 import { NgOptimizedImage } from "@angular/common";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NgOptimizedImage } from "@angular/common";
     HomeModule,
     SharedModule,
     FavoritesModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

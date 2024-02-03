@@ -1,4 +1,4 @@
-export interface Location{
+export type Location = {
   lat: number,
   lon: number
 }

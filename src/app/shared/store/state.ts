@@ -1,5 +1,5 @@
 import { Weather } from "../types/weather";
 
-export interface FavoritesState {
+export type FavoritesState = {
   readonly favorites: Weather[];
 }

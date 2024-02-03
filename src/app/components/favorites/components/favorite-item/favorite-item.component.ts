@@ -64,16 +64,16 @@ export class FavoriteItemComponent implements OnInit {
       this._weatherService.getCurrentWeather(favorite.Key),
       this._forecastService.getForecast(favorite.Key)
     ]).pipe(
-        mergeMap(results => {
-          updatedFavorite.currentWeather = results[0][0];
-          updatedFavorite.forecast = results[1];
-          this._store.dispatch(new WeatherActions.UpdateFavorite(favorite));
-          return of(updatedFavorite);
-        }),
-        catchError(err => {
-          this.handleUpdateError(err);
-          return of(updatedFavorite);
-        })
+      mergeMap(results => {
+        updatedFavorite.currentWeather = results[0][0];
+        updatedFavorite.forecast = results[1];
+        this._store.dispatch(new WeatherActions.UpdateFavorite(favorite));
+        return of(updatedFavorite);
+      }),
+      catchError(err => {
+        this.handleUpdateError(err);
+        return of(updatedFavorite);
+      })
     ).subscribe();
   }
 

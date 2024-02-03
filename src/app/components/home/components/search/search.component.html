@@ -1,10 +1,9 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 offset-lg-2">
-      <div class="input-group">
+      <div class="d-flex">
         <input
           (keyup)="keyPress($event)"
-          #searchValue="ngModel"
           [(ngModel)]="searchInput"
           type="text"
           class="form-control"
@@ -13,7 +12,7 @@
           [resultFormatter]="popupFormatter"
           [inputFormatter]="selectFormatter">
         <div class="input-group-append">
-          <button (click)="onSearch()" class="btn btn-outline-secondary" type="button">
+          <button (click)="onSearch()" class="btn btn-outline-secondary mx-2" type="button">
             Search
           </button>
         </div>

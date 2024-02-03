@@ -8,8 +8,7 @@ import * as WeatherActions from '../../../../shared/store/actions';
 
 @Component({
   selector: 'app-weather',
-  templateUrl: './weather.component.html',
-  styleUrls: ['./weather.component.scss']
+  templateUrl: './weather.component.html'
 })
 
 export class WeatherComponent implements OnInit {

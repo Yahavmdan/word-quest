@@ -1,4 +1,4 @@
-export interface DayNight {
+export type DayNight = {
 	HasPrecipitation: boolean,
 	Icon: number,
 	PrecipitationIntensity?: string,

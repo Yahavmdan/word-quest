@@ -1,11 +1,11 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-toggle-button',
-  templateUrl: './toggle-button.component.html',
-  styleUrls: ['./toggle-button.component.scss']
+  selector: 'app-radio-button',
+  templateUrl: './radio-button.component.html',
+  styleUrls: ['./radio-button.component.scss']
 })
-export class ToggleButtonComponent {
+export class RadioButtonComponent {
 
   @Output()
   public onChangeState: EventEmitter<boolean> = new EventEmitter<boolean>(true);

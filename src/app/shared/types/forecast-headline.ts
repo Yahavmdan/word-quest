@@ -1,4 +1,4 @@
-export interface ForecastHeadline {
+export type ForecastHeadline = {
   Category: string,
   EffectiveDate: Date,
   EffectiveEpochDate: number,

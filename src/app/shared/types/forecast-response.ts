@@ -1,7 +1,7 @@
 import { Forecast } from './forecast';
 import { ForecastHeadline } from './forecast-headline';
 
-export interface ForecastResponse {
+export type ForecastResponse = {
   DailyForecasts: Forecast[],
 	Headline: ForecastHeadline
 }

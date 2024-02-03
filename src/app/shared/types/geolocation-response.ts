@@ -1,4 +1,4 @@
-export interface GeolocationResponse {
+export type GeolocationResponse = {
   Version: number;
   Key: string;
   Type: string;
@@ -16,24 +16,24 @@ export interface GeolocationResponse {
   DataSets: string[];
 }
 
-interface GeoPosition {
+type GeoPosition = {
   Latitude: number;
   Longitude: number;
   Elevation: Elevation;
 }
 
-interface Elevation {
+type Elevation = {
   Metric: Metric;
   Imperial: Metric;
 }
 
-interface Metric {
+type Metric = {
   Value: number;
   Unit: string;
   UnitType: number;
 }
 
-interface TimeZone {
+type TimeZone = {
   Code: string;
   Name: string;
   GmtOffset: number;
@@ -41,7 +41,7 @@ interface TimeZone {
   NextOffsetChange: string;
 }
 
-interface AdministrativeArea {
+type AdministrativeArea = {
   ID: string;
   LocalizedName: string;
   EnglishName: string;
@@ -51,7 +51,7 @@ interface AdministrativeArea {
   CountryID: string;
 }
 
-interface Region {
+type Region = {
   ID: string;
   LocalizedName: string;
   EnglishName: string;

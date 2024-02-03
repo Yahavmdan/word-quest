@@ -1,7 +1,7 @@
 import { DayNight } from './day-night';
 import { Temperature } from './temperature';
 
-export interface Forecast {
+export type Forecast = {
 	Date: Date,
 	Day: DayNight,
 	EpochDate: number,

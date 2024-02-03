@@ -6,8 +6,7 @@ import { catchError, debounceTime, distinctUntilChanged, Observable, of, switchM
 
 @Component({
   selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  templateUrl: './search.component.html'
 })
 export class SearchComponent {
 
@@ -20,7 +19,8 @@ export class SearchComponent {
   constructor(
     private _autoCompleteService: AutoCompleteService,
     public toastService: ToastService
-  ) { }
+  ) {
+  }
 
   public onSearch(): void {
     if (!this.searchInput) return;
@@ -36,10 +36,10 @@ export class SearchComponent {
   }
 
   public filterText(): void {
-    try{
+    try {
       const nonEnglishRegex = new RegExp(/^[^A-Za-z]*$/);
       this.searchInput = this.searchInput.replace(nonEnglishRegex, '');
-    } catch(err) {
+    } catch (err) {
       return;
     }
   }
@@ -50,7 +50,7 @@ export class SearchComponent {
     return this.popupFormatter(value);
   }
   public popupFormatter = (value: AutoCompleteResponse): string => {
-    return value ? `${value.LocalizedName}, ${value.Country.LocalizedName}` : null
+    return value ? `${value.LocalizedName}, ${value.Country.LocalizedName}` : null;
   }
 
   public onAutoComplete = (value$: Observable<string>): Observable<AutoCompleteResponse[]> => {
@@ -58,7 +58,10 @@ export class SearchComponent {
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(value => this._autoCompleteService.getAutoComplete(value)),
-      catchError((err) => { this.toastService.showErrorToast(err.message); return of([]) })
+      catchError((err) => {
+        this.toastService.showErrorToast(err.message);
+        return of([])
+      })
     )
   }
 

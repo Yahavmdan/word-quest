@@ -1,4 +1,4 @@
-export interface AutoCompleteResponse {
+export type AutoCompleteResponse =  {
     Version: number,
     Key: string,
     Type: string,

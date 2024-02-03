@@ -7,11 +7,13 @@ import { AutoCompleteResponse } from "../../shared/types/auto-complete-response"
 import { ToastService } from "../../shared/services/toast.service";
 import { GeolocationResponse } from "../../shared/types/geolocation-response";
 import { forkJoin } from "rxjs";
+import { fade, glideY } from "../../shared/utilities/animations";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  animations: [    fade('fade',500),
+    glideY('glide',-20,500)]
 })
 export class HomeComponent implements OnInit {
 

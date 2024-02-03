@@ -11,7 +11,8 @@ export class AutoCompleteService {
 
   private readonly url = 'https://dataservice.accuweather.com/locations/v1/cities/autocomplete';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   public getAutoComplete(value: string): Observable<AutoCompleteResponse[]> {
     return this.http.get<AutoCompleteResponse[]>(this.url, {

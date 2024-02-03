@@ -1,6 +1,6 @@
-import { Temperature } from './temperature';;
+import { Temperature } from './temperature';
 
-export interface WeatherResponse {
+export type WeatherResponse = {
   EpochTime: number,
   HasPrecipitation: boolean,
   IsDayTime: boolean,

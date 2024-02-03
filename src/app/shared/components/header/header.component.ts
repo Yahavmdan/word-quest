@@ -1,10 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ThemeService } from "../../services/theme.service";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   public menu: boolean = true;
+  public isDarkMode: boolean;
+
+  constructor(public themeService: ThemeService) {
+  }
+
+  ngOnInit(): void {
+    this.themeService.isDarkMode$.subscribe((isDarkMode) => {
+      this.isDarkMode = isDarkMode;
+      this.saveTheme(this.isDarkMode);
+    });
+  }
+
+  public toggleMode(): void {
+    this.themeService.toggleMode();
+  }
+
+  private saveTheme(isDarkMode: boolean): void {
+    localStorage.setItem('theme', JSON.stringify({darkMode: isDarkMode}));
+  }
+
 }

@@ -11,11 +11,12 @@ export class ForecastService {
 
   private readonly url = 'https://dataservice.accuweather.com/forecasts/v1/daily/5day/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   public getForecast(locationKey: string): Observable<ForecastResponse> {
-    return this.http.get<ForecastResponse>(this.url + locationKey,{
-      params:{
+    return this.http.get<ForecastResponse>(this.url + locationKey, {
+      params: {
         apikey: environment.apiKey,
       }
     })

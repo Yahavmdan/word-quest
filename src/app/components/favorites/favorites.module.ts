@@ -17,4 +17,5 @@ import { SharedModule } from "../../shared/shared.module";
     NgOptimizedImage
   ]
 })
-export class FavoritesModule { }
+export class FavoritesModule {
+}

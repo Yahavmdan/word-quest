@@ -1,38 +1,40 @@
 <div class="card-wrapper mt-2 pt-4 pb-4">
-  <div class="d-flex justify-content-between">
+  <div class="d-flex align-items-center justify-content-between flex-column flex-sm-row">
     <div class="d-flex">
       <img class="weatherIcon"
            [ngSrc]="weatherHelper.getWeatherIconLink(weather.currentWeather.WeatherIcon)"
            alt="weather icon"
            width="75" height="45">
     </div>
-    <div>
+    <div class="d-flex align-items-center">
       <h4>{{ weather.state }}, {{ weather.country }}</h4>
-      <span *ngIf="isCelsiusType">
+      <span class="mb-1 mx-1" *ngIf="isCelsiusType">
         {{weatherHelper.getCTemperatureString(weather.currentWeather.Temperature.Metric)}}
       </span>
-      <span *ngIf="!isCelsiusType">
+      <span class="mb-1" *ngIf="!isCelsiusType">
         {{weatherHelper.getFTemperatureString(weather.currentWeather.Temperature.Imperial)}}
       </span>
     </div>
-    <div>
-      <button (click)="isFavorite() ? removeFavorite() : addFavorite()"
-              [ngClass]="isFavorite() ? 'btn btn btn-danger' : 'btn btn btn-success'">
-        {{ isFavorite() ? 'Remove from' : 'Add to' }} Favorites
-      </button>
-      <app-toggle-button (onChangeState)="setTemperatureType($event)" class="d-block" [trueText]="'Celsius'"
-                         [falseText]="'Fahrenheit'"></app-toggle-button>
+    <div class="d-flex flex-column align-items-center pointer">
+      <div (click)="isFavorite() ? removeFavorite() : addFavorite()">
+        <i [ngClass]="isFavorite() ? 'bi bi-star-fill text-yellow' : 'bi bi-star'"></i>
+        <span>
+          {{ isFavorite() ? 'Remove from' : 'Add to' }} Favorites
+        </span>
+      </div>
+      <app-radio-button (onChangeState)="setTemperatureType($event)" class="d-block" [trueText]="'°C'"
+                        [falseText]="'°F'"></app-radio-button>
     </div>
   </div>
   <div class="row mt-4">
     <div class="col-12 text-center">
-      <h1>{{ weather.currentWeather.WeatherText }}</h1>
-      <h4>Forecast: <br> {{ weather.forecast.Headline.Text }}</h4>
+      <h1 class="f-28 f-md-24 f-sm-18">{{ weather.currentWeather.WeatherText }}</h1>
+      <h4 class="f-24 f-md-18 f-sm-14">Forecast: <br> {{ weather.forecast.Headline.Text }}</h4>
     </div>
   </div>
   <div class="row mt-4 d-flex justify-content-around">
     <div *ngFor="let forecast of weather.forecast.DailyForecasts; let i = index"
-         class="col-5 col-lg-2 m-1 text-center p-2 text-wrap mt-2">
+         class="mt-2 m-2 col-12 col-lg-2 col-sm-5 text-center text-wrap">
       <app-forecast [iconUrl]="weatherHelper.getForecastIcon(weather,i)"
                     [date]="forecast.Date"
                     [text]="weatherHelper.getCurrentForecastText(weather,i)"

@@ -28,10 +28,11 @@ import { localStorageSyncReducer } from "../../shared/store/meta-reducers";
     NgbTypeahead,
     SharedModule,
     NgOptimizedImage,
-      StoreModule.forRoot(
-          { favorites: reducer },
-          { metaReducers: [localStorageSyncReducer] }
-      )
+    StoreModule.forRoot(
+      {favorites: reducer},
+      {metaReducers: [localStorageSyncReducer]}
+    )
   ]
 })
-export class HomeModule { }
+export class HomeModule {
+}

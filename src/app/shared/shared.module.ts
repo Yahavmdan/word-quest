@@ -3,23 +3,25 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { ToastComponent } from "./components/toast/toast.component";
-import { ToggleButtonComponent } from "./components/toggle-button/toggle-button.component";
+import { RadioButtonComponent } from "./components/inputs/radio-button/radio-button.component";
 import { NgbToastModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToggleButtonComponent } from './components/inputs/toggle-button/toggle-button.component';
 
 @NgModule({
   declarations: [
-    ToggleButtonComponent,
+    RadioButtonComponent,
     HeaderComponent,
-    ToastComponent
+    ToastComponent,
+    ToggleButtonComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     NgbToastModule,
-    NgbCollapseModule
+    NgbCollapseModule,
   ],
   exports: [
-    ToggleButtonComponent,
+    RadioButtonComponent,
     HeaderComponent,
     ToastComponent
   ]
