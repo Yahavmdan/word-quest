@@ -6,7 +6,7 @@ import { BehaviorSubject } from "rxjs";
 })
 export class ThemeService {
 
-  private _isDarkMode = new BehaviorSubject<boolean>(JSON.parse(localStorage.getItem('theme')).darkMode);
+  private _isDarkMode = new BehaviorSubject<boolean>(false);
   public isDarkMode$ = this._isDarkMode.asObservable();
 
   public toggleMode(): void {
