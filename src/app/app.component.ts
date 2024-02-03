@@ -6,7 +6,7 @@ import { ThemeService } from "./shared/services/theme.service";
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  public isDarkMode: boolean = false;
+  public isDarkMode: boolean;
 
   constructor(private _themeService: ThemeService) {
   }
@@ -18,7 +18,9 @@ export class AppComponent implements OnInit {
 
     if (JSON.parse(localStorage.getItem('theme'))) {
       this.isDarkMode = JSON.parse(localStorage.getItem('theme')).darkMode;
+      return;
     }
+    localStorage.setItem('theme', JSON.stringify({darkMode: this.isDarkMode}));
   }
 
 }
