@@ -14,7 +14,7 @@ import * as WeatherActions from '../../../../shared/store/actions';
 export class WeatherComponent implements OnInit {
   @Input()
   public weather: Weather
-  public isCelsiusType: boolean = true;
+  public isCelsius: boolean = true;
   public readonly favorites$: Observable<Weather[]>;
   public favorites: Weather[];
 
@@ -30,7 +30,7 @@ export class WeatherComponent implements OnInit {
   }
 
   public setTemperatureType(value: boolean): void {
-    this.isCelsiusType = value;
+    this.isCelsius = value;
   }
 
   public addFavorite(): void {

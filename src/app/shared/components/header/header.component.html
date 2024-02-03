@@ -1,9 +1,13 @@
-<nav class="px-3 navbar navbar-expand-lg navbar-dark bg-dark mb-3">
-  <div class="d-flex">
-    <a class="navbar-brand" routerLink="/"><i class="bi bi-cloud-sun-fill mx-2"></i>Weather App</a>
-    <div class="d-flex align-items-center gap-2 mt-1">
+<nav class="px-3 navbar navbar-expand-lg navbar-dark nav-background mb-3">
+  <div class="d-flex flex-column flex-sm-row gap-sm-1">
+    <a (click)="menu = true"
+       class="f-20 f-sm-18 navbar-brand" routerLink="/">
+      <i class="bi bi-cloud-sun-fill"></i>
+      Weather App
+    </a>
+    <div class="d-flex align-items-center gap-1 mt-2">
       <app-toggle-button id="darkMode" (onChangeState)="toggleMode()" [value]="isDarkMode"></app-toggle-button>
-      <label for="darkMode" class="text-white f-14 mb-1">Dark mode</label>
+      <label for="darkMode" class="text-white f-10 mb-1">Theme</label>
     </div>
   </div>
   <button class="navbar-toggler" type="button" (click)="menu = !menu">

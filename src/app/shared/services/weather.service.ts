@@ -11,11 +11,11 @@ export class WeatherService {
 
   private readonly url: string = 'https://dataservice.accuweather.com/currentconditions/v1/';
 
-  constructor(private http: HttpClient) {
+  constructor(private _http: HttpClient) {
   }
 
   public getCurrentWeather(locationKey: string): Observable<WeatherResponse[]> {
-    return this.http.get<WeatherResponse[]>(this.url + locationKey, {
+    return this._http.get<WeatherResponse[]>(this.url + locationKey, {
       params: {
         apikey: environment.apiKey
       }

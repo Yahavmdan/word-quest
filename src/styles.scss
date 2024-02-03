@@ -28,13 +28,13 @@ $white: #ffffff;
 }
 
 .dark-theme-background {
-  background: #2f2f2f;
-  transition: background-color, color ease-in-out 200ms;
+  background: #001c2d;
+  transition: background-color ease-in-out 200ms;
 }
 
 .light-theme-background {
-  background: white;
-  transition: background-color, color ease-in-out 200ms;
+  background: #ffffff;
+  transition: background-color ease-in-out 200ms;
 }
 
 .dark-theme-text {
@@ -847,24 +847,24 @@ $white: #ffffff;
 
 app-root > div.dark-theme-background > main > app-favorites > div.card-wrapper,
 app-root > div.dark-theme-background > main > app-home > div > div > app-weather > div.card-wrapper {
-  background-color: #525252 !important;
+  background: #002841;
   transition: background-color ease-in-out 200ms;
 }
 
 app-root > div.dark-theme-background > main > app-favorites > div > div > div > app-favorite-item > div.card-wrapper,
 app-root > div.dark-theme-background > main > app-home > div > div > app-weather > div.card-wrapper > div > div > app-forecast > div.card-wrapper {
-  background-color: #8a8a8a !important;
+  background: #004064;
   transition: background-color ease-in-out 200ms;
 }
 
 app-root > div.light-theme-background > main > app-favorites > div.card-wrapper,
 app-root > div.light-theme-background > main > app-home > div > div > app-weather > div.card-wrapper {
-  background-color: #f3f3f3 !important;
+  background-color: #ebf7ff;
   transition: background-color ease-in-out 200ms;
 }
 
 app-root > div.light-theme-background > main > app-favorites > div > div > div > app-favorite-item > div.card-wrapper,
 app-root > div.light-theme-background > main > app-home > div > div > app-weather > div.card-wrapper > div > div > app-forecast > div.card-wrapper {
-  background-color: #fafafa !important;
+  background-color: #f3fbff;
   transition: background-color ease-in-out 200ms;
 }

@@ -8,11 +8,11 @@ import { ThemeService } from "./shared/services/theme.service";
 export class AppComponent implements OnInit {
   public isDarkMode: boolean;
 
-  constructor(private themeService: ThemeService) {
+  constructor(private _themeService: ThemeService) {
   }
 
   ngOnInit(): void {
-    this.themeService.isDarkMode$.subscribe((isDarkMode) => {
+    this._themeService.isDarkMode$.subscribe((isDarkMode) => {
       this.isDarkMode = isDarkMode;
     });
   }

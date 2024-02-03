@@ -8,6 +8,7 @@ import { ToastService } from "../../shared/services/toast.service";
 import { GeolocationResponse } from "../../shared/types/geolocation-response";
 import { forkJoin } from "rxjs";
 import { fade, glideY } from "../../shared/utilities/animations";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -20,25 +21,41 @@ export class HomeComponent implements OnInit {
   public weather: Weather;
 
   constructor(
-    private weatherService: WeatherService,
-    private forecastService: ForecastService,
-    private geolocationService: GeolocationService,
+    private _route: ActivatedRoute,
+    private _weatherService: WeatherService,
+    private _forecastService: ForecastService,
+    private _geolocationService: GeolocationService,
     public toastService: ToastService
   ) {
     this.resetWeather();
   }
 
   public ngOnInit(): void {
-    void this.getLocalWeather();
+    this.setInitialWeather();
+  }
+
+  private setInitialWeather(): void {
+    this._route.queryParamMap.subscribe(res => {
+      if (res.keys.length) {
+        this.setWeatherFromRouteParams();
+        return;
+      }
+      void this.getLocalWeather();
+    });
+  }
+
+  private setWeatherFromRouteParams(): void {
+    const params = this._route.snapshot.queryParams;
+    this.setWeather(params[0], params[1], params[2]);
   }
 
   public getLocalWeather(): void {
-    this.geolocationService.getCurrentLocation().subscribe({
+    this._geolocationService.getCurrentLocation().subscribe({
       next: (result: GeolocationResponse) => {
         this.setWeather(result.Key, result.LocalizedName, result.Country.LocalizedName);
       },
       error: (error: {code: number, message: string}) => {
-        // setting Tel Aviv as a default first view if user denied access to location.
+        // sets Tel Aviv as a default first view if user denied access to location.
         this.setWeather('215854', 'Tel Aviv', 'Israel');
         this.toastService.showErrorToast(error.message);
       }
@@ -72,8 +89,8 @@ export class HomeComponent implements OnInit {
 
   private setWeatherDataByKey(key: string): void {
     forkJoin([
-      this.weatherService.getCurrentWeather(key),
-      this.forecastService.getForecast(key)
+      this._weatherService.getCurrentWeather(key),
+      this._forecastService.getForecast(key)
     ]).subscribe({
       next: ([currentWeatherData, forecastData]) => {
         this.weather.currentWeather = currentWeatherData[0];

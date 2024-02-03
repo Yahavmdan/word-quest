@@ -8,19 +8,16 @@
     </div>
     <div class="d-flex align-items-center">
       <h4>{{ weather.state }}, {{ weather.country }}</h4>
-      <span class="mb-1 mx-1" *ngIf="isCelsiusType">
+      <span class="mb-1 mx-1" *ngIf="isCelsius">
         {{weatherHelper.getCTemperatureString(weather.currentWeather.Temperature.Metric)}}
       </span>
-      <span class="mb-1" *ngIf="!isCelsiusType">
+      <span class="mb-1" *ngIf="!isCelsius">
         {{weatherHelper.getFTemperatureString(weather.currentWeather.Temperature.Imperial)}}
       </span>
     </div>
     <div class="d-flex flex-column align-items-center pointer">
       <div (click)="isFavorite() ? removeFavorite() : addFavorite()">
-        <i [ngClass]="isFavorite() ? 'bi bi-star-fill text-yellow' : 'bi bi-star'"></i>
-        <span>
-          {{ isFavorite() ? 'Remove from' : 'Add to' }} Favorites
-        </span>
+        <i [ngClass]="isFavorite() ? 'bi bi-star-fill text-yellow f-28' : 'f-28 bi bi-star'"></i>
       </div>
       <app-radio-button (onChangeState)="setTemperatureType($event)" class="d-block" [trueText]="'°C'"
                         [falseText]="'°F'"></app-radio-button>
@@ -38,7 +35,7 @@
       <app-forecast [iconUrl]="weatherHelper.getForecastIcon(weather,i)"
                     [date]="forecast.Date"
                     [text]="weatherHelper.getCurrentForecastText(weather,i)"
-                    [tempRange]="weatherHelper.getTemperatureRange(forecast,isCelsiusType)"></app-forecast>
+                    [tempRange]="weatherHelper.getTemperatureRange(forecast,isCelsius)"></app-forecast>
     </div>
   </div>
 </div>

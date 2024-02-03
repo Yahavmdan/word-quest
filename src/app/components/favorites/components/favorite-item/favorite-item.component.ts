@@ -7,6 +7,7 @@ import { ForecastService } from "../../../../shared/services/forecast.service";
 import { WeatherHelper } from "../../../../shared/utilities/weather-helper";
 import { Weather } from "../../../../shared/types/weather";
 import { catchError, forkJoin, mergeMap, of } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-favorite-item',
@@ -22,6 +23,7 @@ export class FavoriteItemComponent implements OnInit {
     private _store: Store,
     private _weatherService: WeatherService,
     private _forecastService: ForecastService,
+    private _router: Router,
     public toastService: ToastService,
     public weatherHelper: WeatherHelper
   ) {
@@ -29,6 +31,16 @@ export class FavoriteItemComponent implements OnInit {
 
   public ngOnInit(): void {
     this.updateFavorite(this.weather);
+  }
+
+  public navigate(): void {
+    void this._router.navigate(['/weather'], {
+      queryParams: [
+        this.weather.Key,
+        this.weather.country,
+        this.weather.state
+      ]
+    });
   }
 
   public removeFavorite(): void {
