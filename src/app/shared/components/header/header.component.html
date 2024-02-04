@@ -6,7 +6,7 @@
       Weather App
     </a>
     <div class="d-flex align-items-center gap-1 mt-2">
-      <app-toggle-button id="darkMode" (onChangeState)="toggleMode()" [value]="isDarkMode"></app-toggle-button>
+      <app-toggle-button id="darkMode" (change)="toggleMode()" [value]="isDarkMode"></app-toggle-button>
       <label for="darkMode" class="text-white f-10 mb-1">Theme</label>
     </div>
   </div>

@@ -801,6 +801,15 @@ $white: #ffffff;
   }
 }
 
+////////////// hights/widths ////////////////
+/////////////////////////////////////////////
+
+@media (min-width: 768px) {
+  .h-md-100dvh {
+    height: 100dvh;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 2px;
