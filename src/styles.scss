@@ -23,10 +23,6 @@ $white: #ffffff;
 ///////////////// containers /////////////////
 /////////////////////////////////////////////
 
-.h-100dvh {
-  height: 100dvh;
-}
-
 .dark-theme-background {
   background: #001c2d;
   transition: background-color ease-in-out 200ms;
@@ -46,6 +42,7 @@ $white: #ffffff;
 }
 
 .card-wrapper {
+  height: fit-content;
   border: transparent 1px solid;
   border-radius: 20px;
   padding: 1em;

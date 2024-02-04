@@ -3,7 +3,7 @@ import { ThemeService } from "./shared/services/theme.service";
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
   public isDarkMode: boolean;
