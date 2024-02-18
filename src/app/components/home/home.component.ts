@@ -1,105 +1,109 @@
-import { Component, OnInit } from '@angular/core';
-import { WeatherService } from "../../shared/services/weather.service";
-import { ForecastService } from "../../shared/services/forecast.service";
-import { GeolocationService } from "../../shared/services/geolocation.service";
-import { Weather } from "../../shared/types/weather";
-import { AutoCompleteResponse } from "../../shared/types/auto-complete-response";
-import { ToastService } from "../../shared/services/toast.service";
-import { GeolocationResponse } from "../../shared/types/geolocation-response";
-import { forkJoin } from "rxjs";
+import { Component } from '@angular/core';
 import { fade, glideY } from "../../shared/utilities/animations";
-import { ActivatedRoute } from "@angular/router";
+import { WordService } from "../../shared/services/word.service";
+import { Word } from "../../shared/types/word";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  animations: [    fade('fade',500),
-    glideY('glide',-20,500)]
+  styleUrls: ['./home.component.scss'],
+  animations: [fade('fade', 500),
+    glideY('glide', -20, 500)]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-  public weather: Weather;
+  public word: Word;
+  public step: number = 0;
+  public hints: string[] = [];
+  public level: 'Easy' | 'Medium' | 'Hard' = null;
+  public success: boolean;
 
-  constructor(
-    private _route: ActivatedRoute,
-    private _weatherService: WeatherService,
-    private _forecastService: ForecastService,
-    private _geolocationService: GeolocationService,
-    public toastService: ToastService
-  ) {
-    this.resetWeather();
+  constructor(private _wordService: WordService) {
   }
 
-  public ngOnInit(): void {
-    this.setInitialWeather();
+  private getWord(): void {
+    this._wordService.getWord(this.level).subscribe(res => {
+      this.word = res[0];
+      this.setWord();
+    })
   }
 
-  private setInitialWeather(): void {
-    this._route.queryParamMap.subscribe(res => {
-      if (res.keys.length) {
-        this.setWeatherFromRouteParams();
-        return;
-      }
-      void this.getLocalWeather();
-    });
-  }
-
-  private setWeatherFromRouteParams(): void {
-    const params = this._route.snapshot.queryParams;
-    this.setWeather(params[0], params[1], params[2]);
-  }
-
-  public getLocalWeather(): void {
-    this._geolocationService.getCurrentLocation().subscribe({
-      next: (result: GeolocationResponse) => {
-        this.setWeather(result.Key, result.LocalizedName, result.Country.LocalizedName);
-      },
-      error: (error: {code: number, message: string}) => {
-        // sets Tel Aviv as a default first view if user denied access to location.
-        this.setWeather('215854', 'Tel Aviv', 'Israel');
-        this.toastService.showErrorToast(error.message);
-      }
-    });
-  }
-
-  private resetWeather(): void {
-    this.weather = {Key: null, state: null, country: null, currentWeather: null, forecast: null};
-  }
-
-  public get isWeatherLoaded(): boolean {
-    for (let key in this.weather) {
-      if (this.weather[key] == null) {
-        return false
-      }
+  public chooseDifficulty(level: 'Easy' | 'Medium' | 'Hard', input: HTMLInputElement): void {
+    this.reset(true, input);
+    this.level = level;
+    const word = this.findWord();
+    if (word) {
+      this.word = word;
+    } else {
+      this.getWord();
     }
-    return true
   }
 
-  public onSearch(state: AutoCompleteResponse): void {
-    this.setWeather(state.Key, state.LocalizedName, state.Country.LocalizedName);
+  public submit(input: HTMLInputElement): void {
+    this.step ++;
+    this.failSteps(input);
   }
 
-  public setWeather(key: string, state: string, country: string): void {
-    this.resetWeather();
-    this.weather.Key = key;
-    this.weather.state = state;
-    this.weather.country = country;
-    this.setWeatherDataByKey(key);
+  private isSuccess(input: HTMLInputElement): boolean {
+    if (input.value === this.word.word) {
+      this.handleSuccess(input);
+      return true;
+    }
+    return false;
   }
 
-  private setWeatherDataByKey(key: string): void {
-    forkJoin([
-      this._weatherService.getCurrentWeather(key),
-      this._forecastService.getForecast(key)
-    ]).subscribe({
-      next: ([currentWeatherData, forecastData]) => {
-        this.weather.currentWeather = currentWeatherData[0];
-        this.weather.forecast = forecastData;
-      },
-      error: (error) => {
-        this.toastService.showErrorToast(error.message);
-      }
-    });
+  private alterElements(success: boolean, input: HTMLInputElement):void {
+    input.nextElementSibling.classList.remove('d-none');
+    input.nextElementSibling.classList.add( success ? 'bi-check-lg' : 'bi-exclamation-lg');
+    input.classList.add(success ? 'success' : 'error');
+    setTimeout(() => {
+      input.nextElementSibling.classList.add('d-none');
+      input.nextElementSibling.classList.remove(success ? 'bi-check-lg' : 'bi-exclamation-lg');
+      input.classList.remove(success ? 'success' : 'error');
+    }, 1000)
   }
+
+  private failSteps(input: HTMLInputElement): void {
+    if (this.isSuccess(input)) return;
+
+    this.alterElements(false, input);
+
+    if (this.step === 1) {
+      this.hints.push(`Hint- ${this.step}: The word contains ${this.word.word.length} letters.`)
+    }
+
+    if (this.step === 2) {
+      this.hints.push(`Hint- ${this.step}: The first letter is ${this.word.word[0].toUpperCase()}`)
+    }
+
+    if (this.step === 3) {
+
+    }
+  }
+
+  private reset(moveLevel: boolean, input?: HTMLInputElement): void {
+    if (input && moveLevel) {
+      input.focus();
+      input.value = '';
+    }
+    this.step = 0;
+    this.hints = [];
+    this.success = false;
+  }
+
+  private handleSuccess(input: HTMLInputElement): void {
+    this.reset(false);
+    this.alterElements(true, input);
+    this.success = true;
+  }
+
+  private findWord(): Word {
+    return JSON.parse(localStorage.getItem(`daly ${this.level} word`));
+  }
+
+  private setWord(): void {
+    localStorage.setItem(`daly ${this.level} word`, JSON.stringify(this.word))
+  }
+
 
 }

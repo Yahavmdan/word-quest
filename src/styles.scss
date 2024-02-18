@@ -41,14 +41,6 @@ $white: #ffffff;
   color: #001034;
 }
 
-.card-wrapper {
-  height: fit-content;
-  border: transparent 1px solid;
-  border-radius: 20px;
-  padding: 1em;
-  box-shadow: 7px 9px 28px -3px rgba(0, 0, 0, 0.1);
-}
-
 .form-container {
   width: 600px;
   background-color: #fafffe;
@@ -851,25 +843,21 @@ $white: #ffffff;
   background: transparent;
 }
 
-app-root > div.dark-theme-background > main > app-favorites > div.card-wrapper,
 app-root > div.dark-theme-background > main > app-home > div > div > app-weather > div.card-wrapper {
   background: #002841;
   transition: background-color ease-in-out 200ms;
 }
 
-app-root > div.dark-theme-background > main > app-favorites > div > div > div > app-favorite-item > div.card-wrapper,
 app-root > div.dark-theme-background > main > app-home > div > div > app-weather > div.card-wrapper > div > div > app-forecast > div.card-wrapper {
   background: #004064;
   transition: background-color ease-in-out 200ms;
 }
 
-app-root > div.light-theme-background > main > app-favorites > div.card-wrapper,
 app-root > div.light-theme-background > main > app-home > div > div > app-weather > div.card-wrapper {
   background-color: #ebf7ff;
   transition: background-color ease-in-out 200ms;
 }
 
-app-root > div.light-theme-background > main > app-favorites > div > div > div > app-favorite-item > div.card-wrapper,
 app-root > div.light-theme-background > main > app-home > div > div > app-weather > div.card-wrapper > div > div > app-forecast > div.card-wrapper {
   background-color: #f3fbff;
   transition: background-color ease-in-out 200ms;

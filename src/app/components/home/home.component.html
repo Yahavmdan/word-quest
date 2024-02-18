@@ -1,12 +1,17 @@
 <div @fade @glide class="d-flex flex-column align-items-center w-100">
-  <div class="col-md-10 col-12">
-    <app-search
-      (search)="onSearch($event)"
-      [inputPlaceholder]="'Search State'"></app-search>
+  <h4>Choose difficulty:</h4>
+  <div class="d-flex">
+    <div class="difficulty">
+      <div (click)="chooseDifficulty('Easy', answer)">Easy</div>
+      <div (click)="chooseDifficulty('Medium', answer)">Medium</div>
+      <div (click)="chooseDifficulty('Hard', answer)">Hard</div>
+    </div>
+    <input #answer [disabled]="!level || success" (keyup.enter)="submit(answer)" placeholder="What's your guess?">
+    <i class="bi d-none"></i>
   </div>
-  <div class="col-md-10 col-12">
-    <app-weather
-      *ngIf="isWeatherLoaded"
-      [weather]="weather"></app-weather>
-  </div>
+  <h4 *ngIf="level">guess the word by definition:</h4>
+  <div class="f-28 fw-700 col-6 text-center my-2">{{ word?.meanings[0].definitions[0].definition }}</div>
+  <div *ngFor="let hint of hints;" class="col-6 text-center">{{ hint }}</div>
+  <div *ngIf="success">Wow! good job!</div>
 </div>
+

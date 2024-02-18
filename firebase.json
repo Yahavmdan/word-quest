@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/weather",
+    "public": "dist/word-quest",
     "ignore": [
       "firebase.json",
       "**/.*",

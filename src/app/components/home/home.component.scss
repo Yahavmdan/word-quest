@@ -1,0 +1,102 @@
+@import "src/styles.scss";
+
+.difficulty {
+  display: flex;
+  justify-content: center;
+  border: solid 1px #b7b7b7;
+  border-radius: 15px 0 0 15px;
+  cursor: pointer;
+  margin-bottom: 2rem;
+
+  & div {
+    width: 5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ease 200ms;
+
+    &:hover {
+      background-color: #d7d7d7;
+      color: #000e17;
+    }
+  }
+
+  :nth-child(1) {
+    border-radius: 15px 0 0 15px;
+  }
+
+}
+
+input {
+  width: 15rem;
+  height: 2.6rem;
+  padding-left: 1rem;
+  border-top: solid 1px #b7b7b7 !important;
+  border-bottom: solid 1px #b7b7b7 !important;
+  border-right: solid 1px #b7b7b7 !important;
+  border-left: unset !important;
+  box-shadow: unset;
+  border-radius: 0 15px 15px 0;
+  margin: 0;
+
+  &:focus {
+    outline: none !important;
+  }
+
+  &.error {
+    border-top: solid 1px $red !important;
+    border-bottom: solid 1px $red !important;
+    border-right: solid 1px $red !important;
+    border-left: solid 1px $red !important;
+    background: lighten($light-red, 20%);
+    animation: tiny-wiggle 3 100ms;
+  }
+
+  &.success {
+    border-top: solid 1px $green !important;
+    border-bottom: solid 1px $green !important;
+    border-right: solid 1px $green !important;
+    border-left: solid 1px $green !important;
+    background: lighten($light-green, 20%);
+    animation: tiny-wiggle 3 100ms;
+  }
+}
+
+.bi-check-lg {
+  color: $green;
+}
+
+.bi-exclamation-lg {
+  color: $red;
+}
+
+.bi-exclamation-lg, .bi-check-lg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  position: relative;
+  right: 15px;
+  width: 0;
+  animation: wiggle 10 100ms;
+  height: 41px;
+}
+
+@keyframes tiny-wiggle {
+  10% {
+    rotate: 1deg
+  }
+  100% {
+    rotate: -1deg
+  }
+}
+
+@keyframes wiggle {
+  10% {
+    rotate: 10deg
+  }
+  100% {
+    rotate: -10deg
+  }
+}
