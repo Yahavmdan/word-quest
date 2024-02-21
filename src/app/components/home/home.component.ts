@@ -3,7 +3,6 @@ import { fade, glideY } from "../../shared/utilities/animations";
 import { WordService } from "../../shared/services/word.service";
 import { Word } from "../../shared/types/word";
 import { ThemeService } from "../../shared/services/theme.service";
-import { delay } from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -72,7 +71,8 @@ export class HomeComponent implements OnInit {
       input.nextElementSibling.classList.add('d-none');
       input.nextElementSibling.classList.remove(success ? 'bi-check-lg' : 'bi-exclamation-lg');
       input.classList.remove(success ? 'success' : 'error');
-    }, 500)
+      this.success = false;
+    }, success ? 10000 : 500)
   }
 
   private failSteps(input: HTMLInputElement): void {
