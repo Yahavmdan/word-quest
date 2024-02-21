@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
   }
 
   private isSuccess(input: HTMLInputElement): boolean {
-    if (input.value === this.word.word) {
+    if (input.value.toLowerCase() === this.word.word) {
       this.handleSuccess(input);
       return true;
     }
