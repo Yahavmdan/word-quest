@@ -1,17 +1,29 @@
-<div @fade @glide class="d-flex flex-column align-items-center w-100">
-  <h4>Choose difficulty:</h4>
-  <div class="d-flex">
-    <div class="difficulty">
-      <div (click)="chooseDifficulty('Easy', answer)">Easy</div>
-      <div (click)="chooseDifficulty('Medium', answer)">Medium</div>
-      <div (click)="chooseDifficulty('Hard', answer)">Hard</div>
+<div @fade @glide class="d-flex flex-column align-items-center w-100 h-md-100dvh">
+  <i class="bi bi-chat-quote-fill f-80 mt-5"></i>
+  <div class="f-24 f-sm-16 fw-700 col-6 text-center my-2">Word Quest</div>
+  <i (click)="toggleShowGuide()" class="bi bi-info-circle text-blue my-1 pointer"></i>
+  <p *ngIf="showGuide" @fade @glide class="col-10 col-sm-5 text-center f-14 f-sm-12 text-blue">Every day, 3 different English words in 3 difficulty
+    levels, try to guess the words by the definition below, if you fail, you get more hints,
+    if you keep failing, it's your fault. <span class="fw-700">I did my best.</span></p>
+  <div class="d-flex my-3 col-sm-6 col-11 justify-content-center">
+    <div class="difficulty col-6">
+      <div class="col-4 f-sm-10" #easy (click)="chooseDifficulty(easy, answer)">Easy</div>
+      <div class="col-4 f-sm-10" #medium (click)="chooseDifficulty(medium, answer)">Medium</div>
+      <div class="col-4 f-sm-10" #hard (click)="chooseDifficulty(hard, answer)">Hard</div>
     </div>
-    <input #answer [disabled]="!level || success" (keyup.enter)="submit(answer)" placeholder="What's your guess?">
+    <input class="col-6" #answer [disabled]="!level || success" (keyup.enter)="submit(answer)"
+           [placeholder]="level ? 'What\'s your guess?' : 'Choose difficulty to start...'"
+           [ngClass]="level ? '' : 'tiny-wiggle'">
     <i class="bi d-none"></i>
   </div>
-  <h4 *ngIf="level">guess the word by definition:</h4>
-  <div class="f-28 fw-700 col-6 text-center my-2">{{ word?.meanings[0].definitions[0].definition }}</div>
-  <div *ngFor="let hint of hints;" class="col-6 text-center">{{ hint }}</div>
+  <h5 *ngIf="level">guess the word by definition:</h5>
+  <div class="f-24 fw-700 col-11 col-sm-6 text-center my-2">{{ word?.meanings[0].definitions[0].definition }}</div>
+  <div *ngFor="let hint of hints;" class="d-flex col-11 col-sm-6 justify-content-center">
+    <i class="bi bi-lightbulb-fill text-yellow mx-2"></i>
+    <div class="text-center">
+      <span class="fw-700">{{ hint }}</span>
+    </div>
+  </div>
   <div *ngIf="success">Wow! good job!</div>
 </div>
 

@@ -9,7 +9,6 @@
   margin-bottom: 2rem;
 
   & div {
-    width: 5rem;
     height: 2.5rem;
     display: flex;
     align-items: center;
@@ -17,7 +16,7 @@
     transition: all ease 200ms;
 
     &:hover {
-      background-color: #d7d7d7;
+      background-color: lighten($light-blue, 20%);
       color: #000e17;
     }
   }
@@ -29,7 +28,6 @@
 }
 
 input {
-  width: 15rem;
   height: 2.6rem;
   padding-left: 1rem;
   border-top: solid 1px #b7b7b7 !important;
@@ -39,6 +37,10 @@ input {
   box-shadow: unset;
   border-radius: 0 15px 15px 0;
   margin: 0;
+  color: #a1a1a1;
+  &::placeholder {
+    color: #a1a1a1;
+  }
 
   &:focus {
     outline: none !important;
@@ -83,6 +85,21 @@ input {
   height: 41px;
 }
 
+.tiny-wiggle {
+  animation: ring 2.5s infinite;
+}
+
+@keyframes ring {
+  10% { rotate: 1deg; transform: translateX(2px) }
+  13% { rotate: -1deg; transform: translateX(-2px) }
+  16% { rotate: 1deg; transform: translateX(2px) }
+  19% { rotate: -1deg; transform: translateX(-2px) }
+  22% { rotate: -1deg; transform: translateX(2px) }
+  25% { rotate: -1deg; transform: translateX(-2px) }
+  28% { rotate: -1deg; transform: translateX(2px) }
+  31% { rotate: 0deg }
+}
+
 @keyframes tiny-wiggle {
   10% {
     rotate: 1deg
@@ -98,5 +115,14 @@ input {
   }
   100% {
     rotate: -10deg
+  }
+}
+
+@media (max-width: 512px) {
+  input {
+    padding-left: 5px;
+  }
+  input::placeholder {
+    font-size: 12px;
   }
 }

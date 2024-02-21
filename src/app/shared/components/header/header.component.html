@@ -1,33 +1,9 @@
-<nav class="px-3 navbar navbar-expand-lg navbar-dark nav-background mb-3">
-  <div class="d-flex flex-column flex-sm-row gap-sm-1">
-    <a (click)="menu = true"
-       class="f-20 f-sm-18 navbar-brand" routerLink="/">
-      <i class="bi bi-cloud-sun-fill"></i>
-      Weather App
-    </a>
-    <div class="d-flex align-items-center gap-1 mt-2">
-      <app-toggle-button id="darkMode" (change)="toggleMode()" [value]="isDarkMode"></app-toggle-button>
-      <label for="darkMode" class="text-white f-10 mb-1">Theme</label>
-    </div>
+<div class="p-3 h-50px position-fixed">
+  <div class="w-50px h-50px d-flex justify-content-center align-items-center">
+  <i [ngClass]="isDarkMode ? 'bi-brightness-low-fill f-36' : 'bi-moon-fill f-28'"
+     (click)="toggleMode()"
+     class="bi"></i>
   </div>
-  <button class="navbar-toggler" type="button" (click)="menu = !menu">
-    &#9776;
-  </button>
-  <div [ngbCollapse]="menu" class="collapse navbar-collapse d-lg-flex justify-content-end">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link"
-           routerLink="favorites"
-           routerLinkActive="active"
-           (click)="menu = true"><i class="bi bi-star-fill"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"
-           routerLink="weather"
-           routerLinkActive="active"
-           (click)="menu = true"><i class="bi bi-house-fill"></i></a>
-      </li>
-    </ul>
-  </div>
-</nav>
+</div>
+
 
