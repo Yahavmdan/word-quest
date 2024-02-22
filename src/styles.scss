@@ -870,22 +870,22 @@ $white: #ffffff;
   background: transparent;
 }
 
-app-root > div.dark-theme-background > main > app-home > div > div > app-weather > div.card-wrapper {
+app-root > div.dark-theme-background > main > app-home > div > div > app-home > div.card-wrapper {
   background: #002841;
   transition: background-color ease-in-out 200ms;
 }
 
-app-root > div.dark-theme-background > main > app-home > div > div > app-weather > div.card-wrapper > div > div > app-forecast > div.card-wrapper {
+app-root > div.dark-theme-background > main > app-home > div > div > app-home > div.card-wrapper > div > div > app-forecast > div.card-wrapper {
   background: #004064;
   transition: background-color ease-in-out 200ms;
 }
 
-app-root > div.light-theme-background > main > app-home > div > div > app-weather > div.card-wrapper {
+app-root > div.light-theme-background > main > app-home > div > div > app-home > div.card-wrapper {
   background-color: #ebf7ff;
   transition: background-color ease-in-out 200ms;
 }
 
-app-root > div.light-theme-background > main > app-home > div > div > app-weather > div.card-wrapper > div > div > app-forecast > div.card-wrapper {
+app-root > div.light-theme-background > main > app-home > div > div > app-home > div.card-wrapper > div > div > app-forecast > div.card-wrapper {
   background-color: #f3fbff;
   transition: background-color ease-in-out 200ms;
 }
