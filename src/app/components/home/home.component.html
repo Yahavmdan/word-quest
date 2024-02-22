@@ -1,4 +1,4 @@
-<div @fade @glide class="d-flex flex-column align-items-center w-100 h-md-100dvh">
+<div @fade @glide class="d-flex flex-column align-items-center w-100">
   <i class="bi bi-chat-quote-fill f-80 mt-5"></i>
   <div class="f-24 f-sm-16 fw-700 col-6 text-center my-2">Word Quest</div>
   <i (click)="toggleShowGuide()" class="bi bi-info-circle text-blue my-1 pointer"></i>
@@ -18,12 +18,23 @@
   </div>
   <h5 *ngIf="level">guess the word by definition:</h5>
   <div class="f-24 fw-700 col-11 col-sm-6 text-center my-2">{{ word?.meanings[0].definitions[0].definition }}</div>
-  <div *ngFor="let hint of hints;" class="d-flex col-11 col-sm-6 justify-content-center">
+  <div *ngFor="let hint of hints;" class="d-flex col-12 col-sm-6 justify-content-md-center justify-content-start">
     <i class="bi bi-lightbulb-fill text-yellow mx-2"></i>
-    <div class="text-center">
+    <div class="text-md-center">
       <span class="fw-700">{{ hint }}</span>
     </div>
   </div>
-  <div *ngIf="success">Wow! good job!</div>
+  <div [ngClass]="success ? 'confettis' : ''">
+    <div [ngClass]="success ? 'confetti' : ''"></div>
+    <div [ngClass]="success ? 'confetti' : ''"></div>
+    <div [ngClass]="success ? 'confetti' : ''"></div>
+    <div [ngClass]="success ? 'confetti' : ''"></div>
+    <div [ngClass]="success ? 'confetti' : ''"></div>
+    <div [ngClass]="success ? 'confetti' : ''"></div>
+    <div [ngClass]="success ? 'confetti' : ''"></div>
+    <div [ngClass]="success ? 'confetti' : ''"></div>
+    <div [ngClass]="success ? 'confetti' : ''"></div>
+  </div>
+  <h3 *ngIf="success" class="text-green">Wow! good job!</h3>
 </div>
 

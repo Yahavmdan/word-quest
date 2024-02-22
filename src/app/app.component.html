@@ -1,10 +1,10 @@
 <div [ngClass]="isDarkMode
   ? 'dark-theme-background dark-theme-text'
-  : 'light-theme-background light-theme-text'">
+  : 'light-theme-background light-theme-text'" class="app-container">
   <header>
     <app-header></app-header>
   </header>
-  <main class="p-sm-5 p-2 h-md-100dvh">
+  <main class="p-sm-5 p-2">
     <router-outlet></router-outlet>
   </main>
   <footer></footer>
