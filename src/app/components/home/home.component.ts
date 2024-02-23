@@ -14,13 +14,16 @@ import { ThemeService } from "../../shared/services/theme.service";
   ]
 })
 export class HomeComponent implements OnInit {
+  public isLoading: boolean = false;
   public showGuide: boolean;
+  public isError: boolean = false;
+  public isSuccess: boolean;
+  public isDarkMode: boolean;
   public word: Word;
+  public definition: string;
   public step: number = 0;
   public hints: string[] = [];
   public level: 'Easy' | 'Medium' | 'Hard' = null;
-  public success: boolean;
-  public isDarkMode: boolean;
 
   constructor(private _wordService: WordService,
               private themeService: ThemeService) {
@@ -33,11 +36,21 @@ export class HomeComponent implements OnInit {
   }
 
   private getWord(): void {
-    this._wordService.getWord(this.level).subscribe(res => {
-      this.word = res[0];
-      // this.setWord();
-    })
+    this.isLoading = true;
+    this._wordService.getWord(this.level).subscribe(
+      {
+        next: res => {
+          this.isLoading = false;
+          this.word = res[0];
+          this.definition = this.word.meanings[0].definitions[0].definition;
+        },
+        error: () => {
+          this.isLoading = false;
+          this.isError = true;
+        }
+      });
   }
+
 
   public chooseDifficulty(level: HTMLDivElement, input: HTMLInputElement): void {
     this.reset(true, input);
@@ -55,7 +68,7 @@ export class HomeComponent implements OnInit {
     this.failSteps(input);
   }
 
-  private isSuccess(input: HTMLInputElement): boolean {
+  private checkAnswer(input: HTMLInputElement): boolean {
     if (input.value.toLowerCase() === this.word.word) {
       this.handleSuccess(input);
       return true;
@@ -71,12 +84,12 @@ export class HomeComponent implements OnInit {
       input.nextElementSibling.classList.add('d-none');
       input.nextElementSibling.classList.remove(success ? 'bi-check-lg' : 'bi-exclamation-lg');
       input.classList.remove(success ? 'success' : 'error');
-      this.success = false;
+      this.isSuccess = false;
     }, success ? 10000 : 500)
   }
 
   private failSteps(input: HTMLInputElement): void {
-    if (this.isSuccess(input)) return;
+    if (this.checkAnswer(input)) return;
 
     this.alterElements(false, input);
 
@@ -122,15 +135,17 @@ export class HomeComponent implements OnInit {
       input.focus();
       input.value = '';
     }
+    this.definition = '';
     this.step = 0;
     this.hints = [];
-    this.success = false;
+    this.isSuccess = false;
+    this.isError = false;
   }
 
   private handleSuccess(input: HTMLInputElement): void {
     this.reset(false);
     this.alterElements(true, input);
-    this.success = true;
+    this.isSuccess = true;
   }
 
   private findWord(): Word {
