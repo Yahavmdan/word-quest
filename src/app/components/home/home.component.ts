@@ -132,7 +132,6 @@ export class HomeComponent implements OnInit {
 
   private reset(moveLevel: boolean, input?: HTMLInputElement): void {
     if (input && moveLevel) {
-      input.focus();
       input.value = '';
     }
     this.definition = '';

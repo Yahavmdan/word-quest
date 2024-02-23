@@ -11,7 +11,7 @@
       <div class="col-4 f-sm-10" #medium (click)="chooseDifficulty(medium, answer)">Medium</div>
       <div class="col-4 f-sm-10" #hard (click)="chooseDifficulty(hard, answer)">Hard</div>
     </div>
-    <input class="col-6" #answer [disabled]="!level || isSuccess" (keyup.enter)="submit(answer)"
+    <input class="col-6" #answer (keyup.enter)="submit(answer)"
            [placeholder]="level ? 'What\'s your guess?' : 'Choose difficulty to start...'"
            [ngClass]="level ? '' : 'tiny-wiggle'">
     <i class="bi d-none"></i>
