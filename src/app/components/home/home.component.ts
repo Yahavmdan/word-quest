@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this._wordService.getT('banana', 'typeOf').subscribe(res => {
+    this._wordService.getWordType('banana', 'typeOf').subscribe(res => {
       console.log(res)
     })
     this.themeService.isDarkMode$.subscribe((isDarkMode) => {

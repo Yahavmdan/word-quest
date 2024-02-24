@@ -23,7 +23,7 @@ export class WordService extends BaseService {
     return this.httpClient.get<Word>(this.apiUrl + this.getRandomWord(words));
   }
 
-  public getWord2(word: string, endPoint: 'typeOf' | 'other'): Observable<any> {
+  public getWordType(word: string, endPoint: 'typeOf' | 'other'): Observable<any> {
     return this.httpClient.get<any>(this.prepareEndPoint(word, endPoint), {headers: this.headers});
   }
 
