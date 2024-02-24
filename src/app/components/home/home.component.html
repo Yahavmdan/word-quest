@@ -11,30 +11,34 @@
       <div class="col-4 f-sm-10" #medium (click)="chooseDifficulty(medium, answer)">Medium</div>
       <div class="col-4 f-sm-10" #hard (click)="chooseDifficulty(hard, answer)">Hard</div>
     </div>
-    <input class="col-6" #answer [disabled]="!level || success" (keyup.enter)="submit(answer)"
+    <input class="col-6" #answer (keyup.enter)="submit(answer)"
            [placeholder]="level ? 'What\'s your guess?' : 'Choose difficulty to start...'"
            [ngClass]="level ? '' : 'tiny-wiggle'">
     <i class="bi d-none"></i>
   </div>
-  <h5 *ngIf="level">guess the word by definition:</h5>
-  <div class="f-24 fw-700 col-11 col-sm-6 text-center my-2">{{ word?.meanings[0].definitions[0].definition }}</div>
+  <h5 *ngIf="level">Guess the word by definition:</h5>
+  <div @fade @glide class="f-24 fw-700 col-11 col-sm-6 text-center my-2 d-flex justify-content-center"
+       [ngClass]="{'card-wrapper': definition}">
+    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center spinner w-50px h-50px bi bi-arrow-clockwise"></div>
+    {{ definition }}</div>
+  <div *ngIf="!isLoading && isError" class="text-red">Unexpected Error - try to refresh.</div>
   <div *ngFor="let hint of hints;" class="d-flex col-12 col-sm-6 justify-content-md-center justify-content-start">
     <i class="bi bi-lightbulb-fill text-yellow mx-2"></i>
     <div class="text-md-center">
       <span class="fw-700">{{ hint }}</span>
     </div>
   </div>
-  <div [ngClass]="success ? 'many-confetti' : ''">
-    <div [ngClass]="success ? 'confetti' : ''"></div>
-    <div [ngClass]="success ? 'confetti' : ''"></div>
-    <div [ngClass]="success ? 'confetti' : ''"></div>
-    <div [ngClass]="success ? 'confetti' : ''"></div>
-    <div [ngClass]="success ? 'confetti' : ''"></div>
-    <div [ngClass]="success ? 'confetti' : ''"></div>
-    <div [ngClass]="success ? 'confetti' : ''"></div>
-    <div [ngClass]="success ? 'confetti' : ''"></div>
-    <div [ngClass]="success ? 'confetti' : ''"></div>
+  <div *ngIf="isSuccess" [ngClass]="isSuccess ? 'many-confetti' : ''">
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
   </div>
-  <h3 *ngIf="success" class="text-green">Wow! good job!</h3>
+  <h3 *ngIf="isSuccess" class="text-green">Wow! good job!</h3>
 </div>
 
