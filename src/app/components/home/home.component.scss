@@ -12,6 +12,7 @@
   border-radius: 20px;
   padding: 1em;
   box-shadow: 7px 9px 28px -3px rgba(0, 0, 0, 0.1);
+  height: fit-content;
 }
 
 .confetti {
@@ -100,7 +101,7 @@
   cursor: pointer;
   margin-bottom: 2rem;
 
-  & div {
+  & button {
     height: 2.5rem;
     display: flex;
     align-items: center;
@@ -117,6 +118,18 @@
     border-radius: 15px 0 0 15px;
   }
 
+}
+
+.active {
+  background: #81aec7;
+  scale: 1.150;
+  border-radius: 3px !important;
+}
+
+button {
+  background: unset;
+  color: unset;
+  border: unset;
 }
 
 input {

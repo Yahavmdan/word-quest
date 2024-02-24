@@ -34,3 +34,6 @@ export type Word = {
   license: License;
   sourceUrls: string[];
 };
+
+export type Levels = 'Easy' | 'Medium' | 'Hard';
+export type EndPoints = 'typeOf' | 'definitions' | 'similarTo' | 'examples' | 'rhymes';

@@ -2,31 +2,32 @@
   <i class="bi bi-chat-quote-fill f-80 mt-5"></i>
   <div class="f-24 f-sm-16 fw-700 col-6 text-center my-2">Word Quest</div>
   <i (click)="toggleShowGuide()" class="bi bi-info-circle text-blue my-1 pointer"></i>
-  <p *ngIf="showGuide" @fade @glide class="col-10 col-sm-5 text-center f-14 f-sm-12 text-blue">Every day, 3 different English words in 3 difficulty
+  <p *ngIf="isGuide" @fade @glide class="col-10 col-sm-5 text-center f-14 f-sm-12 text-blue">Every day, 3 different English words in 3 difficulty
     levels, try to guess the words by the definition below, if you fail, you get more hints,
     if you keep failing, it's your fault. <span class="fw-700">I did my best.</span></p>
-  <div class="d-flex my-3 col-sm-6 col-11 justify-content-center">
-    <div class="difficulty col-6">
-      <div class="col-4 f-sm-10" #easy (click)="chooseDifficulty(easy, answer)">Easy</div>
-      <div class="col-4 f-sm-10" #medium (click)="chooseDifficulty(medium, answer)">Medium</div>
-      <div class="col-4 f-sm-10" #hard (click)="chooseDifficulty(hard, answer)">Hard</div>
-    </div>
-    <input class="col-6" #answer (keyup.enter)="submit(answer)"
-           [placeholder]="level ? 'What\'s your guess?' : 'Choose difficulty to start...'"
-           [ngClass]="level ? '' : 'tiny-wiggle'">
-    <i class="bi d-none"></i>
-  </div>
   <h5 *ngIf="level">Guess the word by definition:</h5>
   <div @fade @glide class="f-24 fw-700 col-11 col-sm-6 text-center my-2 d-flex justify-content-center"
        [ngClass]="{'card-wrapper': definition}">
     <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center spinner w-50px h-50px bi bi-arrow-clockwise"></div>
     {{ definition }}</div>
   <div *ngIf="!isLoading && isError" class="text-red">Unexpected Error - try to refresh.</div>
-  <div *ngFor="let hint of hints;" class="d-flex col-12 col-sm-6 justify-content-md-center justify-content-start">
-    <i class="bi bi-lightbulb-fill text-yellow mx-2"></i>
-    <div class="text-md-center">
+  <div class="d-flex flex-wrap col-12 col-sm-6">
+    <div @fade @glide *ngFor="let hint of hints;" class="d-flex justify-content-start">
+      <i class="bi bi-lightbulb-fill text-yellow mx-2"></i>
       <span class="fw-700">{{ hint }}</span>
     </div>
+  </div>
+  <div *ngIf="isLost">No more guesses! the word was <span class="fw-700 f-24">{{ word.word }}!</span> better luck next time.</div>
+  <div class="d-flex my-3 col-sm-6 col-11 justify-content-center">
+    <div #container class="difficulty col-6">
+      <button class="col-4 f-sm-10" #easy (click)="chooseDifficulty(easy, answer, container)">Easy</button>
+      <button class="col-4 f-sm-10" #medium (click)="chooseDifficulty(medium, answer, container)">Medium</button>
+      <button class="col-4 f-sm-10" #hard (click)="chooseDifficulty(hard, answer, container)">Hard</button>
+    </div>
+    <input class="col-6" #answer [disabled]="isLoading || !level" (keyup.enter)="submit(answer)"
+           [placeholder]="level ? 'What\'s your guess?' : 'Choose difficulty to start...'"
+           [ngClass]="level ? '' : 'tiny-wiggle'">
+    <i class="bi d-none"></i>
   </div>
   <div *ngIf="isSuccess" [ngClass]="isSuccess ? 'many-confetti' : ''">
     <div class="confetti"></div>
