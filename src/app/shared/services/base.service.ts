@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { environment } from "../../../environments/environment";
+import { keys } from "../../../.env";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseService {
   public apiUrl = environment.apiUrl;
+  public apiUrlRapid = environment.apiUrlRapid;
+  public headers = {
+    'X-RapidAPI-Key': keys.apiRapidKey,
+    'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+  }
+
   public easyWords = [
     "apple", "house", "dog", "cat", "ball", "tree", "book", "sun", "chair", "bird",
     "flower", "water", "fish", "moon", "hat", "cake", "bed", "duck", "key", "ship",
@@ -86,4 +93,7 @@ export class BaseService {
 
   public words = {easyWords: this.easyWords, mediumWords: this.mediumWords, hardWords: this.hardWords};
 
+  public prepareEndPoint(word: string, endPoint: 'typeOf' | 'other'): string {
+    return this.apiUrlRapid + word + '/' + endPoint
+  }
 }
