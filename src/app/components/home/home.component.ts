@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { fade, glideY } from "../../shared/utilities/animations";
 import { WordService } from "../../shared/services/word.service";
 import { EndPoints, Levels, Word } from "../../shared/types/word";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { firebaseConfig, environment } from "../../../environments/environment.prod";
 
 @Component({
   selector: 'app-home',
@@ -32,6 +35,13 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.initializeAnalytics();
+  }
+
+  private initializeAnalytics(): void {
+    environment.production
+      ? getAnalytics(initializeApp(firebaseConfig))
+      : null;
   }
 
   private getWord(): void {
