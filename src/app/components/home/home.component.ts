@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { fade, glideY } from "../../shared/utilities/animations";
 import { WordService } from "../../shared/services/word.service";
-import { EndPoints, Levels, Word } from "../../shared/types/word";
+import { Levels, Word } from "../../shared/types/word";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig, environment } from "../../../environments/environment.prod";
@@ -22,10 +22,10 @@ export class HomeComponent implements OnInit {
   public isSuccess: boolean;
   public isLost: boolean = false;
 
-  public word: Word;
+  public word: any;
   public definition: string;
   public typeOf: string[];
-  public rhymesWith: string[];
+  public syllables: string[];
   public example: string;
   public step: number = 0;
   public hints: string[] = [];
@@ -44,14 +44,12 @@ export class HomeComponent implements OnInit {
       : null;
   }
 
-  private getWord(): void {
+  private getWord(level?: Levels): void {
     this.isLoading = true;
-    this._wordService.getWord(this.level).subscribe(
+    this._wordService.getWord(this.level ?? level).subscribe(
       {
         next: res => {
-          this.isLoading = false;
-          this.word = res[0];
-          this.getWordBy('definitions');
+          this.handleRes(res, this.level);
         },
         error: () => {
           this.isLoading = false;
@@ -60,45 +58,26 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  private handleDefinitions(res: any): void {
-    this.definition = res.definitions[0].definition;
-  }
-
-  private handleExamples(res: any): void {
-    const example = this.findLongestString(res['examples']);
-    if (!example) {
-      this.step++;
-      this.failSteps();
+  private handleRes(res: any, level: Levels): void {
+    if (!res.syllables?.list?.length) {
+      this.getWord(level);
       return;
     }
-    this.example = this.replaceWordWithStars(example);
-    this.hints.push(`The word can be used in a sentence like this: "${this.example}"`);
-  }
-
-  private handleRhymes(res: any): void {
-    this.rhymesWith = res['rhymes'].all;
-    this.hints.push(`The word rhymes with "${this.rhymesWith[0]}" or "${this.rhymesWith[1]}" or "${this.rhymesWith[2]}"`);
-  }
-
-  private handleTypeOf(res: any): void {
-    this.typeOf = res.typeOf;
-    if (!this.typeOf.length) {
-      this.step++;
-      this.failSteps();
-      return;
-    }
-    this.hints.push(`The word is a type of "${this.typeOf[0]}"`);
-  }
-
-  private getWordBy(type: EndPoints): void {
-    this._wordService.getWord2(this.word.word, type).subscribe(res => {
-      switch (type) {
-        case 'definitions': this.handleDefinitions(res); break;
-        case 'examples': this.handleExamples(res); break;
-        case 'rhymes': this.handleRhymes(res); break;
-        case 'typeOf': this.handleTypeOf(res); break;
-      }
+    const filter = res.results.filter((result: any) => {
+      return result.partOfSpeech === 'noun' && result.examples?.length >= 1 && result.typeOf?.length >= 1
     });
+
+    if (!filter.length) {
+      this.getWord(level);
+      return;
+    }
+
+    this.word = {...filter, word: res.word, syllables: res.syllables.list.length};
+    this.isLoading = false;
+    this.definition = this.word[0].definition;
+    this.syllables = this.word.syllables;
+    this.typeOf = this.word[0].typeOf;
+    this.example = this.word[0].examples;
   }
 
   public chooseDifficulty(level: HTMLButtonElement, input: HTMLInputElement, container: HTMLDivElement): void {
@@ -156,11 +135,10 @@ export class HomeComponent implements OnInit {
     switch (this.step) {
       case 1: this.hints.push(`The word contains ${this.word.word.length} letters.`); break;
       case 2: this.hints.push(`The first letter is ${this.word.word[0].toUpperCase()}`); break;
-      case 3: this.getWordBy('typeOf'); break;
-      case 4: this.getWordBy('examples'); break;
-      case 5: this.getWordBy('rhymes'); break;
-      case 6: this.getWordBy('similarTo'); break;
-      case 7: this.revelWord(); break;
+      case 3: this.hints.push(`The word has ${this.syllables} syllables`); break;
+      case 4: this.hints.push(`The word is a type of: "${this.typeOf[0]}"`); break;
+      case 5: this.hints.push(`The word can be used in a sentence like this: ${this.sensorString(this.example[0])}`); break;
+      case 6: this.revelWord(); break;
     }
   }
 
@@ -169,23 +147,14 @@ export class HomeComponent implements OnInit {
     this.isLost = true;
   }
 
-  private replaceWordWithStars(definition: string): string {
+  public sensorString(definition: string): string {
+    console.log(definition)
     if (!definition) {
       return '';
     }
     const wordToReplace = this.word.word;
-    const stars = '*'.repeat(wordToReplace.length);
+    const stars = '_'.repeat(wordToReplace.length);
     return definition.replace(wordToReplace, stars);
-  }
-
-  private findLongestString(arr: string[]): string {
-    let longest = "";
-    arr.forEach(str => {
-      if (str.length > longest.length) {
-        longest = str;
-      }
-    });
-    return longest;
   }
 
   private reset(moveLevel: boolean, input?: HTMLInputElement): void {

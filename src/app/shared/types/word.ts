@@ -36,4 +36,3 @@ export type Word = {
 };
 
 export type Levels = 'Easy' | 'Medium' | 'Hard';
-export type EndPoints = 'typeOf' | 'definitions' | 'similarTo' | 'examples' | 'rhymes';
