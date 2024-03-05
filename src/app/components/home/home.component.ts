@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { fade, glideY } from "../../shared/utilities/animations";
 import { WordService } from "../../shared/services/word.service";
-import { Levels, Word } from "../../shared/types/word";
+import { Levels } from "../../shared/types/word";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig, environment } from "../../../environments/environment.prod";
@@ -86,14 +86,8 @@ export class HomeComponent implements OnInit {
       child.classList.remove('active');
     });
     level.classList.add('active');
-    // if ()
     this.level = level.innerHTML as Levels;
-    // const word = this.findWord();
-    // if (word) {
-    //   this.word = word;
-    // } else {
     this.getWord();
-    // }
   }
 
   public submit(input: HTMLInputElement): void {
@@ -108,9 +102,11 @@ export class HomeComponent implements OnInit {
 
   private checkAnswer(input: HTMLInputElement): boolean {
     if (input.value.toLowerCase() === this.word.word) {
+      input.value = '';
       this.handleSuccess(input);
       return true;
     }
+    input.value = '';
     return false;
   }
 
@@ -173,14 +169,6 @@ export class HomeComponent implements OnInit {
     this.reset(false);
     this.alterElements(true, input);
     this.isSuccess = true;
-  }
-
-  private findWord(): Word {
-    return JSON.parse(localStorage.getItem(`daly ${this.level} word`));
-  }
-
-  private setWord(): void {
-    localStorage.setItem(`daly ${this.level} word`, JSON.stringify(this.word))
   }
 
   public toggleShowGuide(): void {
