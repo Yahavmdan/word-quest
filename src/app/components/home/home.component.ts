@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { fade, glideY } from "../../shared/utilities/animations";
 import { WordService } from "../../shared/services/word.service";
-import { Levels } from "../../shared/types/word";
+import { Levels, Result, Word } from "../../shared/types/word";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig, environment } from "../../../environments/environment.prod";
@@ -22,10 +22,10 @@ export class HomeComponent implements OnInit {
   public isSuccess: boolean;
   public isLost: boolean = false;
 
-  public word: any;
+  public word: Word;
   public definition: string;
   public typeOf: string[];
-  public syllables: string[];
+  public syllables: number;
   public example: string;
   public step: number = 0;
   public hints: string[] = [];
@@ -58,26 +58,26 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  private handleRes(res: any, level: Levels): void {
+  private handleRes(res: Word, level: Levels): void {
     if (!res.syllables?.list?.length) {
       this.getWord(level);
       return;
     }
-    const filter = res.results.filter((result: any) => {
+    const filteredResults = res.results.filter((result: Result) => {
       return result.partOfSpeech === 'noun' && result.examples?.length >= 1 && result.typeOf?.length >= 1
     });
 
-    if (!filter.length) {
+    if (!filteredResults.length) {
       this.getWord(level);
       return;
     }
 
-    this.word = {...filter, word: res.word, syllables: res.syllables.list.length};
+    this.word = {results: filteredResults, word: res.word, syllables: res.syllables};
+    this.definition = this.word.results[0].definition;
+    this.syllables = this.word.syllables.count;
+    this.typeOf = this.word.results[0].typeOf;
+    this.example = this.word.results[0].examples[0];
     this.isLoading = false;
-    this.definition = this.word[0].definition;
-    this.syllables = this.word.syllables;
-    this.typeOf = this.word[0].typeOf;
-    this.example = this.word[0].examples;
   }
 
   public chooseDifficulty(level: HTMLButtonElement, input: HTMLInputElement, container: HTMLDivElement): void {
@@ -91,6 +91,7 @@ export class HomeComponent implements OnInit {
   }
 
   public submit(input: HTMLInputElement): void {
+    if (!input.value) return;
     if (this.isLost) return;
     if (!this.level) {
       this.alterElements(false, input);
@@ -133,7 +134,7 @@ export class HomeComponent implements OnInit {
       case 2: this.hints.push(`The first letter is ${this.word.word[0].toUpperCase()}`); break;
       case 3: this.hints.push(`The word has ${this.syllables} syllables`); break;
       case 4: this.hints.push(`The word is a type of: "${this.typeOf[0]}"`); break;
-      case 5: this.hints.push(`The word can be used in a sentence like this: ${this.sensorString(this.example[0])}`); break;
+      case 5: this.hints.push(`The word can be used in a sentence like this: ${this.sensorString(this.example)}`); break;
       case 6: this.revelWord(); break;
     }
   }
@@ -144,7 +145,6 @@ export class HomeComponent implements OnInit {
   }
 
   public sensorString(definition: string): string {
-    console.log(definition)
     if (!definition) {
       return '';
     }

@@ -1,38 +1,22 @@
-export type Phonetics = {
-  text: string;
-  audio: string;
-  sourceUrl: string;
-  license: {
-    name: string;
-    url: string;
-  };
-};
-
-export type Definition = {
-  definition: string;
-  synonyms: string[];
-  antonyms: string[];
-};
-
-export type Meaning = {
-  partOfSpeech: string;
-  definitions: Definition[];
-  synonyms: string[];
-  antonyms: string[];
-};
-
-export type License = {
-  name: string;
-  url: string;
-};
-
 export type Word = {
   word: string;
-  phonetic: string;
-  phonetics: Phonetics[];
-  meanings: Meaning[];
-  license: License;
-  sourceUrls: string[];
+  results: Result[];
+  syllables: Syllables;
 };
+
+export type Result = {
+  definition?: string;
+  examples?: string[];
+  partOfSpeech?: string;
+  synonyms?: string[];
+  hasCategories?: string[];
+  typeOf?: string[];
+}
+
+export type Syllables = {
+  count: number;
+  list: string[];
+}
+
 
 export type Levels = 'Easy' | 'Medium' | 'Hard';
