@@ -7,24 +7,32 @@
     if you keep failing, it's your fault. <span class="fw-700">I did my best.</span></p>
   <h5 *ngIf="level">Guess the word by definition:</h5>
   <div @fade @glide class="f-24 fw-700 col-11 col-sm-6 text-center my-2 d-flex justify-content-center"
-       [ngClass]="{'card-wrapper': definition}">
-    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center spinner w-50px h-50px bi bi-arrow-clockwise"></div>
-    {{ definition ? sensorString(definition) : '' }}</div>
-  <div *ngIf="!isLoading && isError" class="text-red">Unexpected Error - try to refresh.</div>
+       [ngClass]="{'card-wrapper': currentWord?.results[0].definition}">
+    {{ sensorString(currentWord?.results[0].definition) }}</div>
+  <div *ngIf="isError" class="text-red">Unexpected Error - try to refresh.</div>
   <div class="d-flex flex-wrap col-12 col-sm-6">
     <div @fade @glide *ngFor="let hint of hints;" class="d-flex justify-content-start">
       <i class="bi bi-lightbulb-fill text-yellow mx-2"></i>
       <span class="fw-700">{{ hint }}</span>
     </div>
   </div>
-  <div *ngIf="isLost">No more guesses! the word was <span class="fw-700 f-24 text-red">{{ word.word }}!</span> better luck next time.</div>
+  <div *ngIf="isLost">No more guesses! the word was <span class="fw-700 f-24 text-red">{{ currentWord.word }}!</span> better luck next time.</div>
   <div class="d-flex my-3 col-sm-6 col-11 justify-content-center">
     <div #container class="difficulty col-6">
-      <button class="col-4 f-sm-10" #easy (click)="chooseDifficulty(easy, answer, container)">Easy</button>
-      <button class="col-4 f-sm-10" #medium (click)="chooseDifficulty(medium, answer, container)">Medium</button>
-      <button class="col-4 f-sm-10" #hard (click)="chooseDifficulty(hard, answer, container)">Hard</button>
+      <button class="col-4 f-sm-10" #easy (click)="chooseDifficulty(easy, answer, container)">
+        <div *ngIf="isLoading.Easy" class="d-flex justify-content-center align-items-center spinner w-50px h-50px bi bi-arrow-clockwise"></div>
+        <span *ngIf="!isLoading.Easy">Easy</span>
+      </button>
+      <button class="col-4 f-sm-10" #medium (click)="chooseDifficulty(medium, answer, container)">
+        <div *ngIf="isLoading.Medium" class="d-flex justify-content-center align-items-center spinner w-50px h-50px bi bi-arrow-clockwise"></div>
+        <span *ngIf="!isLoading.Medium">Medium</span>
+      </button>
+      <button class="col-4 f-sm-10" #hard (click)="chooseDifficulty(hard, answer, container)">
+        <div *ngIf="isLoading.Hard" class="d-flex justify-content-center align-items-center spinner w-50px h-50px bi bi-arrow-clockwise"></div>
+        <span *ngIf="!isLoading.Hard">Hard</span>
+      </button>
     </div>
-    <input class="col-6" #answer [disabled]="isLoading || !level" (keyup.enter)="submit(answer)"
+    <input class="col-6" #answer [disabled]="!level" (keyup.enter)="submit(answer)"
            [placeholder]="level ? 'What\'s your guess?' : 'Choose difficulty to start...'"
            [ngClass]="level ? '' : 'tiny-wiggle'">
     <i class="bi d-none"></i>

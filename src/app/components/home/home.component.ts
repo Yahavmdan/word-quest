@@ -16,13 +16,16 @@ import { firebaseConfig, environment } from "../../../environments/environment.p
   ]
 })
 export class HomeComponent implements OnInit {
-  public isLoading: boolean = false;
+  public isLoading: { Easy: boolean, Medium: boolean, Hard: boolean } = { Easy: false, Medium: false, Hard: false };
   public isGuide: boolean;
   public isError: boolean = false;
   public isSuccess: boolean;
   public isLost: boolean = false;
 
-  public word: Word;
+  public currentWord: Word;
+  public easyWord: Word;
+  public mediumWord: Word;
+  public hardWord: Word;
   public definition: string;
   public typeOf: string[];
   public syllables: number;
@@ -35,6 +38,9 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.getWord('Easy');
+    this.getWord('Medium');
+    this.getWord('Hard');
     this.initializeAnalytics();
   }
 
@@ -44,15 +50,16 @@ export class HomeComponent implements OnInit {
       : null;
   }
 
-  private getWord(level?: Levels): void {
-    this.isLoading = true;
-    this._wordService.getWord(this.level ?? level).subscribe(
+  private getWord(level: Levels): void {
+    this.isLoading[level] = true;
+    this._wordService.getWord(level).subscribe(
       {
         next: res => {
-          this.handleRes(res, this.level);
+          this.isLoading[level] = false;
+          this.handleRes(res, level);
         },
         error: () => {
-          this.isLoading = false;
+          this.isLoading[level] = false;
           this.isError = true;
         }
       });
@@ -71,23 +78,38 @@ export class HomeComponent implements OnInit {
       this.getWord(level);
       return;
     }
+    this.switchLevel(level, filteredResults, res);
+  }
 
-    this.word = {results: filteredResults, word: res.word, syllables: res.syllables};
-    this.definition = this.word.results[0].definition;
-    this.syllables = this.word.syllables.count;
-    this.typeOf = this.word.results[0].typeOf;
-    this.example = this.word.results[0].examples[0];
-    this.isLoading = false;
+  private switchLevel(level: Levels, results: Result[], res: Word): void {
+    switch (level) {
+      case "Easy": this.easyWord = this.setWords(results, res); break;
+      case "Medium": this.mediumWord = this.setWords(results, res); break;
+      case "Hard": this.hardWord = this.setWords(results, res); break;
+    }
+  }
+
+  private setWords(results: Result[], res: Word): Word {
+    return {results, word: res.word, syllables: res.syllables};
   }
 
   public chooseDifficulty(level: HTMLButtonElement, input: HTMLInputElement, container: HTMLDivElement): void {
+    if (this.isLoading[level.children[0].innerHTML]) return;
     this.reset(true, input);
     Array.from(container.children).forEach(child => {
       child.classList.remove('active');
     });
     level.classList.add('active');
-    this.level = level.innerHTML as Levels;
-    this.getWord();
+    this.level = level.children[0].innerHTML as Levels;
+    this.setCurrentWord(this.level);
+  }
+
+  private setCurrentWord(level: Levels): void {
+    switch (level) {
+      case "Easy": this.currentWord = this.easyWord; break;
+      case "Medium": this.currentWord = this.mediumWord; break;
+      case "Hard": this.currentWord = this.hardWord; break;
+    }
   }
 
   public submit(input: HTMLInputElement): void {
@@ -102,7 +124,7 @@ export class HomeComponent implements OnInit {
   }
 
   private checkAnswer(input: HTMLInputElement): boolean {
-    if (input.value.toLowerCase() === this.word.word) {
+    if (input.value.toLowerCase() === this.currentWord.word) {
       input.value = '';
       this.handleSuccess(input);
       return true;
@@ -130,8 +152,8 @@ export class HomeComponent implements OnInit {
       this.alterElements(false, input);
     }
     switch (this.step) {
-      case 1: this.hints.push(`The word contains ${this.word.word.length} letters.`); break;
-      case 2: this.hints.push(`The first letter is ${this.word.word[0].toUpperCase()}`); break;
+      case 1: this.hints.push(`The word contains ${this.currentWord.word.length} letters.`); break;
+      case 2: this.hints.push(`The first letter is ${this.currentWord.word[0].toUpperCase()}`); break;
       case 3: this.hints.push(`The word has ${this.syllables} syllables`); break;
       case 4: this.hints.push(`The word is a type of: "${this.typeOf[0]}"`); break;
       case 5: this.hints.push(`The word can be used in a sentence like this: ${this.sensorString(this.example)}`); break;
@@ -148,7 +170,7 @@ export class HomeComponent implements OnInit {
     if (!definition) {
       return '';
     }
-    const wordToReplace = this.word.word;
+    const wordToReplace = this.currentWord.word;
     const stars = '_'.repeat(wordToReplace.length);
     return definition.replace(wordToReplace, stars);
   }
